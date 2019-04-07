@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>网银登陆系统</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+
+</head>
+<body style="text-align: -webkit-center;height: inherit">
+<div id="wallpaper"
+     style="background: url('/images/wallpaper2.jpg');background-size: 100% 150%;display: flex;align-items: center;height: inherit;">
+    <fieldset class="layui-elem-field" style="margin-left: 38%;display: flex;align-items: center;">
+        <legend style="margin-bottom: 40px;font-size: 20px;margin-left: 0px;font-family:cursive ">兰山咖啡银行网上银行登陆</legend>
+        <div class="layui-field-box">
+            <div id="mainwrapper">
+                <form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            <i class="layui-icon" style="font-size: 18px">用户名 &#xe66f;</i>
+                        </label>
+                        <div class="layui-input-block">
+                            <input id="userName" type="text" name="" value="" placeholder="请输入" autocomplete="off"
+                                   class="layui-input" lay-verify="username">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            <i class="layui-icon" style="font-size: 18px">密码 &#xe673;</i>
+                        </label>
+                        <div class="layui-input-block">
+                            <input id="passWord" type="password" name="" value="" placeholder="请输入" autocomplete="off"
+                                   class="layui-input" lay-verify="password">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            <i class="layui-icon" style="font-size: 18px">验证码 &#xe679;</i>
+                        </label>
+                        <div class="layui-input-block">
+                            <!--/images/timg.jpeg-->
+                            <img id="securityCodeImage" src="http://localhost:8080/CaptchaCode/getCaptchaCode"
+                                 style="width: 95px;height: 38px;float: right">
+                            <input id="securityCode" type="text" value="" style="width: 60%;float: left" name=""
+                                   placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div id="warn" class='layui-form-item' hidden style="color: red"></div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <!--lay-submit-->
+                            <button id="loginsubmit" class="layui-btn layui-btn-lg layui-btn-radius" lay-submit
+                                    lay-filter="login">登 陆
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-lg layui-btn-radius layui-btn-primary">重 置
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+                </form>
+            </div>
+        </div>
+    </fieldset>
+
+</div>
+
+<script src="../../components/core-min.js"></script>
+<script src="../../components/sha256.js"></script>
+<script src="../../rsa.js"></script>
+<script src="../../aes.js"></script>
+<script src="../../layui/layui.js"></script>
+
+<script>
+    function changeCaptcha() {
+        $("#securityCodeImage").attr("src", "/CaptchaCode/getCaptchaCode");
+    }
+
+    layui.use(['jquery', 'form', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form;
+        var layer = layui.layer;
+
+        $("#securityCodeImage").bind('click', function () {
+            console.log("inininin")
+            changeCaptcha();
+        });
+
+        var aesKey = getKey();
+        var encryptKey = RSA(aesKey);
+        console.log(aesKey)
+        console.log(encryptKey)
+
+        form.on('submit(login)', function () {
+            console.log("123")
+            var userName = $("#userName").val();
+            var passWord = $("#passWord").val();
+            var secureCode = $("#securityCode").val();
+            var enPassWord = CryptoJS.SHA256(passWord);
+            var json = '{"userName": "' + userName + '","passWord": "' + enPassWord + '","identifyingCode": "' + secureCode + '"}';
+            console.log(json)
+            var cipherText = AESEnc(aesKey, json);
+            var plainText = AESDec(aesKey, cipherText);
+            console.log("密文: " + cipherText);
+            console.log("明文: " + plainText);
+            $.ajax({
+                type: 'POST',
+                url: '/login',
+                data: {
+                    requestData: cipherText,
+                    encryptKey: encryptKey
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    console.log(data);
+
+                    if (data.msg == "成功") {
+                        console.log("in")
+                        changeCaptcha();
+                        window.location.href = "/index";
+                    } else {
+                        $("#warn").removeAttr("hidden");
+                        $("#warn").text(data.msg);
+                        changeCaptcha();
+                    }
+                }
+            })
+            return false;
+        });
+
+
+        form.verify({
+            username: function (value) {
+                if (!/^[a-zA-Z][a-zA-Z0-9]{6,16}$/.test(value)) {
+                    return '用户名必须是字母开头的6-16位数字与字母组合'
+                }
+            },
+            // password: function (value) {
+            //     if(!/^(?![^a-zA-Z]+$)(?!\D+$).[a-zA-Z0-9]{8,}$/.test(value)){
+            //         return '密码必须是8位以上的数字字母组合'
+            //     }
+            // }
+        });
+    });
+</script>
+</body>
+</html>

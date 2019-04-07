@@ -1,0 +1,163 @@
+li{
+    width: 17%;
+}
+
+#header{
+    background: url("../../picture/banner.jpg") no-repeat;
+    width: 100%;
+    display: block;
+    height: 65px;
+    background-size: cover;
+    box-shadow: 0px 6px 20px 0px #848484;
+}
+#dock{
+    text-align: -webkit-center;
+    box-shadow: 0px 6px 20px 0px #565656;
+}
+
+#left{
+    float: left;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+#right{
+    float: right;
+    display: inline-block;
+    margin-top: 19px;
+    margin-right: 20px;
+    font-size: 20px;
+}
+#logout{
+    font-size: 15px;
+    margin-top: 20px;
+    color: white;
+}
+#layuiTab{
+    height: 85%;
+    margin-top: 0;
+}
+#content{
+    background: url("../../picture/back.jpg") no-repeat;
+    background-size: cover;
+    height: 96%;
+
+}
+.cust-card{
+    border-color: white;
+    box-shadow: 0px 6px 20px 0px #565656;
+
+}
+#addCountPage_wrapper{
+    width: 50%;
+    margin-left: 24%;
+
+}
+#activities_wrapper{
+    width: 30%;
+    margin-left: 20px;
+    margin-top: 20px;
+    height: 58%;
+    float: left;
+}
+#personalPage_wrapper{
+    width: 62%;
+    margin-left: 20px;
+    margin-top: 20px;
+    float: left;
+    height: 25%;
+
+}
+#roller_wrapper{
+    width: 95.5%;
+    /* margin: 20px; */
+    margin-left: 20px;
+    padding-top: 20px;
+}
+#addCountPage{
+    padding-top: 10%;
+}
+#mainPage{
+    height: 100%;
+}
+#businessA{
+    height: 80px;
+    width: 80px;
+    background: url("../../picture/businessA.png") no-repeat;
+    background-size: cover;
+    float: left;
+}
+#businessB{
+    height: 80px;
+    width: 80px;
+    background: url("../../picture/businessB.png") no-repeat;
+    background-size: cover;
+    float: left;
+    margin-left: 20px;
+}
+#businessC{
+    height: 80px;
+    width: 80px;
+    background: url("../../picture/businessC.png") no-repeat;
+    background-size: cover;
+    float: left;
+    margin-left: 20px;
+}
+#businessD{
+    height: 80px;
+    width: 80px;
+    background: url("../../picture/businessD.png") no-repeat;
+    background-size: cover;
+    float: left;
+    margin-top: 20px;
+}
+.list-wrapper{
+
+
+    box-shadow: 0px 6px 20px 0px #565656;
+    float: left;
+    margin-left: 30px;
+
+}
+
+#userListPage{
+    padding-top: 10%;
+
+}
+
+#usertable{
+    margin-left: 30%;
+}
+#personalInfor_wrapper{
+    width: 62%;
+    margin-left: 20px;
+    margin-top: 14px;
+    float: left;
+    height: 28%;
+}
+
+#footer{
+    height: 20%;
+    background:url("../../picture/back.jpg") no-repeat;
+    background-size: cover;
+    line-height: 50px;
+    color:white;
+    font-size: 20px;
+    box-shadow: 0px -1px 12px 0px #2f2f2f
+}
+#addCountPage_form{
+    margin-top: 30px;
+}
+#LogSelectCondition_wrapper{
+    width: 24%;
+    float: left;
+    margin-left: 10%;
+    margin-top: -10px;
+    height: 312px;
+}
+#loSelectCondition_form{
+    margin-top: 30px;
+}
+#logSearchPage{
+    padding-top: 10%;
+}

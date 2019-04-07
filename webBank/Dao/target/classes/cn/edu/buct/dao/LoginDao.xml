@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.buct.dao.LoginDao">
+    <resultMap id="user" type="User">
+        <id property="uid" column="userid" javaType="String"/>
+        <result property="un" column="username" javaType="String"/>
+        <result property="pw" column="password" javaType="String"/>
+        <result property="tm" column="times" javaType="Integer"/>
+    </resultMap>
+    <update id="updateTimes">
+        update `user` set times = 3
+    </update>
+    <update id="update" parameterType="User">
+        update `user`
+        <trim prefix="set" prefixOverrides=",">
+            <if test="un!=null">
+                ,username=#{un}
+            </if>
+            <if test="pw!=null">
+                ,password=#{pw}
+            </if>
+            <if test="tm!=null">
+                ,times=#{tm}
+            </if>
+        </trim>
+        where userid=#{uid}
+    </update>
+    <select id="selectByUserName" parameterType="String" resultMap="user">
+        select * from `user` where username=#{un};
+    </select>
+
+    <select id="select" parameterType="String" resultMap="user">
+        select * from `user` where userid=#{uid};
+    </select>
+
+</mapper>

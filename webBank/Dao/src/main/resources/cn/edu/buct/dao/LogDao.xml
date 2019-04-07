@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.buct.dao.LogDao">
+    <resultMap id="log" type="Log">
+        <id property="lid" column="id" javaType="Integer"/>
+        <result property="snum" column="serial_number" javaType="String"/>
+        <result property="uid" column="user_id" javaType="String"/>
+        <result property="fctp" column="function_type" javaType="String"/>
+        <result property="rs" column="result" javaType="String"/>
+        <result property="lc" column="log_create" javaType="java.sql.Timestamp"/>
+        <result property="sta" column="state" javaType="String"/>
+    </resultMap>
+
+    <update id="update" parameterType="Log"  useGeneratedKeys="true" keyProperty="lid">
+        update `total_log`
+        <trim prefix="set" prefixOverrides=",">
+            <if test="snum!=null">
+                ,serial_number=#{snum}
+            </if>
+            <if test="uid!=null">
+                ,user_id=#{uid}
+            </if>
+            <if test="fctp!=null">
+                ,function_type=#{fctp}
+            </if>
+            <if test="rs!=null">
+                ,result=#{rs}
+            </if>
+            <if test="lc!=null">
+                ,log_create=#{lc}
+            </if>
+            <if test="sta!=null">
+                ,state=#{sta}
+            </if>
+        </trim>
+        where id=#{lid}
+    </update>
+    <select id="selectAllByUserId"  parameterType="String" resultMap="log">
+        select * from `total_log` ;
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="lid" parameterType="Log">
+        insert into `total_log` values(#{lid},#{snum},#{uid},#{fctp},#{rs},#{lc},#{sta});
+    </insert>
+    <select id="selectAllByTime"  resultMap="log">
+        select * from `total_log` where log_create between #{startDate} and #{endDate};
+    </select>
+    <select id="selectAllByType" parameterType="String" resultMap="log">
+        select * from `total_log` where function_type=#{fctp};
+    </select>
+    <select id="selectAllByTypeAndTime"  resultMap="log">
+        select * from `total_log` where function_type=#{fctp} and log_create between #{startDate} and #{endDate};
+    </select>
+
+
+
+</mapper>

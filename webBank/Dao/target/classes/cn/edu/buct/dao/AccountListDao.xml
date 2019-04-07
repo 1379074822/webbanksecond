@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="cn.edu.buct.dao.AccountListDao">
+    <resultMap id="account" type="Account">
+        <id property="kid" column="id" javaType="Integer"/>
+        <result property="customerID" column="customer_id" javaType="String"/>
+        <result property="userName" column="user_name" javaType="String"/>
+        <result property="passWord" column="pass_word" javaType="String"/>
+        <result property="accountNumber" column="account_number" javaType="String"/>
+        <result property="balance" column="balance" javaType="String"/>
+    </resultMap>
+    <update id="update" parameterType="Account">
+        update `account_list`
+        <trim prefix="set" prefixOverrides=",">
+            <if test="userName!=null">
+                ,user_name=#{userName}
+            </if>
+            <if test="passWord!=null">
+                ,pass_word=#{passWord}
+            </if>
+            <if test="accountNumber!=null">
+                ,account_number=#{accountNumber}
+            </if>
+        </trim>
+        where id=#{kid}
+    </update>
+    <insert id="addCard" parameterType="Account">
+        insert into `account_list` (id,customer_id,user_name,pass_word,account_number,balance)
+        values (#{kid}, #{customerID}, #{userName}, #{passWord}, #{accountNumber},#{balance})
+    </insert>
+    <select id="selectByUserName" parameterType="String" resultMap="account">
+        select * from `account_list` where user_name=#{userName};
+    </select>
+
+    <select id="select" parameterType="String" resultMap="account">
+        select * from `account_list` where customer_id=#{customerID};
+    </select>
+</mapper>

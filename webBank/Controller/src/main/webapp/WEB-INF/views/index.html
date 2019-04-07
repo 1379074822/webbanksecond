@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <title>网银登陆系统</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layui/css/mainPage.css">
+</head>
+<body style="text-align: -webkit-center;height: 100%;overflow: hidden">
+<div id="mainWrapper" style="height: inherit">
+    <div id="header">
+        <div id="left" >
+            <img src="../../picture/logo.png" style="height: 35px;">
+            <img src="../../picture/图片%201.png" style="height: 55px">
+        </div>
+        <div id="right">
+            <a id="logout" href="/quit" class="layui-icon layui-icon-username">登出</a>
+        </div>
+    </div>
+    <div id="layuiTab" class="layui-tab layui-tab-brief">
+        <ul id="dock" class="layui-tab-title">
+            <li class="layui-this">首页</li>
+            <li>账户加挂</li>
+            <li>账户列表</li>
+            <li>日志查询</li>
+            <li>转账</li>
+        </ul>
+        <div id="content" class="layui-tab-content">
+            <div id="mainPage" class="layui-tab-item layui-show">
+                <div id="roller_wrapper">
+                    <div class="layui-carousel" id="roller">
+                        <div carousel-item>
+                            <img src="../../picture/ROLLER1.png">
+                            <img src="../../picture/ROLLER2.png">
+                            <img src="../../picture/ROLLER3.png">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 条目中可以是任意内容，如：<img src=""> -->
+                <fieldset id="activities_wrapper" class="layui-elem-field cust-card">
+                    <legend>近期业务</legend>
+                    <div class="layui-field-box">
+                        <div id="businessA"></div>
+                        <div id="businessB"></div>
+                        <div id="businessC"></div>
+                        <!--<div id="businessD"></div>-->
+                    </div>
+                </fieldset>
+                <fieldset id="personalPage_wrapper" class="layui-elem-field cust-card">
+                    <legend>个人信息</legend>
+                    <div class="layui-field-box">
+                        nihao
+                    </div>
+                </fieldset>
+                <fieldset id="personalInfor_wrapper" class="layui-elem-field cust-card">
+                    <legend>账户信息</legend>
+                    <div class="layui-field-box">
+                        nihao
+                    </div>
+                </fieldset>
+
+            </div>
+            <div id="addCountPage" class="layui-tab-item">
+                <fieldset id="addCountPage_wrapper" class="layui-elem-field cust-card">
+                    <legend>请填写信息</legend>
+                    <div class="layui-field-box">
+                        <form id="addCountPage_form" class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-icon">银行卡号&#xe672;</label>
+                                <div class="layui-input-block">
+                                    <input id="cardNumber" type="text" name="" placeholder="请输入卡面卡号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-icon">密码 &#xe678;</label>
+                                <div class="layui-input-block">
+                                    <input id="password" type="text" name="" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="addCount">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                            <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+                        </form>
+                    </div>
+                </fieldset>
+
+            </div>
+            <div id="userListPage" class="layui-tab-item">
+                <div class="list-wrapper" id="usertable">
+                    <table id="cardlist" lay-filter="cardlist-table"></table>
+                </div>
+            </div>
+            <div id="logSearchPage"  class="layui-tab-item">
+                <fieldset id="LogSelectCondition_wrapper" class="layui-elem-field cust-card">
+                    <legend>筛选条件</legend>
+                    <div class="layui-field-box">
+                        <form id="LogSelectCondition_form" class="layui-form">
+                            <div class="layui-form-item" >
+                                <label class="layui-form-label layui-icon">开始时间 &#xe652;</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="borrowtimebox" name="starttime" class="layui-input" placeholder="请输入"/>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-icon">截止时间 &#xe651;</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="borrowtimebox1" name="lasttime" class="layui-input" placeholder="请输入"/>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-icon">类型 &#xe60a;</label>
+                                <div class="layui-input-block">
+                                    <select id="logType" name="city" lay-verify="required">
+                                        <option value=""></option>
+                                        <option value="0">登陆</option>
+                                        <option value="1">登出</option>
+                                        <option value="2">转账</option>
+                                        <option value="3">加挂账户</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="logSearch">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+
+                <div class="list-wrapper" id="logtable">
+                    <table id="loglist" lay-filter="loglist"></table>
+                </div>
+            </div>
+            <div id="transferPage" class="layui-tab-item">内容5</div>
+        </div>
+        <div id="footer"></div>
+    </div>
+
+</div>
+</body>
+
+<!--<script src="../../layui/lay/modules/jquery.js"></script>-->
+<script src="../../layui/layui.js"></script>
+
+<script>
+
+    layui.use(['jquery','form','element','table','carousel','laydate'], function(){
+        $ = layui.jquery;
+        var element = layui.element;
+        var table = layui.table;
+        var carousel = layui.carousel;
+        var  form = layui.form ;
+
+        var  laydate = layui.laydate;
+
+
+        laydate.render({     //创建时间选择框
+            elem: '#borrowtimebox'
+        });
+        laydate.render({     //创建时间选择框
+            elem: '#borrowtimebox1'
+        });
+        //建造实例
+        carousel.render({
+            elem: '#roller'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            ,height:'200px'
+            //,anim: 'updown' //切换动画方式
+        });
+
+        table.render({
+            elem: '#loglist'
+            ,height: 312
+            ,url: '/logSearchAll' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'lid', title: '流水号', width:180, fixed: 'left'}
+                ,{field: 'fctp', title: '类型', width:180}
+                ,{field: 'lc', title: '时间', width:180}
+                ,{field: 'sta', title: '状态', width:180}
+
+            ]]
+        });
+
+        //渲染用户列表表格
+        table.render({
+            elem: '#cardlist'
+            ,height: 312
+            ,url: '/cardList' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+            {field: 'accountNumber', title: '卡号', width:180, fixed: 'left'}
+            ,{field: 'currencyType', title: '币种', width:180,templet: function(d){
+            return '人民币'
+        }}
+            ,{field: 'balance', title: '余额', width:180}
+            ,{fixed: 'right', width:180, align:'center', toolbar: '#barDemo'}
+
+            ]]
+        });
+        // 提交添加账户表单
+        form.on('submit(addCount)',function () {
+
+            var cardNumber = $("#cardNumber").val();
+            var password = $("#password").val();
+
+
+            console.log(cardNumber);
+            console.log(password);
+            $.ajax({
+                type: 'POST',
+                url: '/addcard',
+                data: {
+                    cardNumber:cardNumber,
+                    password:password
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    var cardNumber = $("#cardNumber").val("");
+                    var password = $("#password").val("");
+                }
+            })
+            // var option={
+            //
+            //     url: 'http://localhost:8080/addcard' //数据接口
+            //     , method: 'POST'
+            //     , where: {
+            //         cardNumber:cardNumber,
+            //         password:password
+            //     }
+            // };
+            return false;
+        });
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: 'http://localhost:8080/addcard',
+        //         data: {
+        //             cardNumber:cardNumber,
+        //             password:password
+        //         },
+        //         dataType: 'json',
+        //         success: function (data) {
+        //             layer.msg("添加成功")
+        //         }
+        //     })
+        //     return false;
+        // });
+        // 提交搜索日志条件
+        form.on('submit(logSearch)',function () {
+            var startDate = $("#borrowtimebox").val();
+            var endDate = $("#borrowtimebox1").val();
+            var logType = $("#logType  option:selected").text();
+            console.log(startDate);
+            console.log(endDate);
+            console.log(logType);
+
+
+            var option={
+
+                url: '/logSearch' //数据接口
+                , method: 'POST'
+                , where: {
+                    startDate:startDate,
+                    endDate:endDate,
+                    logType:logType
+                }
+
+
+            };
+            table.reload('loglist',option);
+
+            return false;
+        });
+
+        table.on("tool(cardlist-table)", function (obj) {
+            var layEvent = obj.event;
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            var data = obj.data; //获得当前行数据
+            var cardnumber = data.accountNumber;
+            console.log(cardnumber)
+            if (layEvent === 'allowance') {
+                console.log("okokokokokok")
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/allowance',
+                    data: {
+                        cardNumber: cardnumber,
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+
+                        obj.update({
+                            balance: result.balance
+                        });
+                    }
+                });
+            }
+        })
+
+        //渲染日志查询表格
+
+
+
+
+
+    });
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="allowance">余额</a>
+    <a class="layui-btn layui-btn-xs" lay-event="detail">明细</a>
+    <a class="layui-btn layui-btn-xs" lay-event="transfer">转账</a>
+</script>
+
+</html>
